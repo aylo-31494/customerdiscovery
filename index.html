@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Discovery Board</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#0C0C0E;--bg2:#141418;--bg3:#1C1C22;--bg4:#24242C;
+--border:#2A2A34;--border2:#38384A;
+--text:#E8E6E3;--text2:#A8A4A0;--text3:#68646A;
+--green:#4ADE80;--green-d:#166534;--green-bg:rgba(74,222,128,0.08);
+--amber:#FBBF24;--amber-d:#78350F;--amber-bg:rgba(251,191,36,0.08);
+--blue:#60A5FA;--blue-d:#1E3A5F;--blue-bg:rgba(96,165,250,0.08);
+--red:#F87171;--red-bg:rgba(248,113,113,0.08);
+--purple:#A78BFA;--purple-bg:rgba(167,139,250,0.08);
+}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh}
+.header{padding:24px 32px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--bg);z-index:10;backdrop-filter:blur(12px)}
+.logo{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:14px;color:var(--green);letter-spacing:1px;text-transform:uppercase}
+.logo span{color:var(--text3)}
+.btn{padding:10px 18px;border-radius:8px;font-family:'DM Sans';font-size:13px;font-weight:600;border:none;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:6px}
+.btn:active{transform:scale(.97)}
+.btn-p{background:var(--green);color:var(--bg)}
+.btn-s{background:var(--bg3);color:var(--text2);border:1px solid var(--border)}
+.btn-s:hover{border-color:var(--border2);background:var(--bg4)}
+.btn-xs{padding:6px 12px;font-size:12px;border-radius:6px}
+.btn-ghost{background:none;border:none;color:var(--text3);padding:6px 10px;font-size:12px;border-radius:6px}
+.btn-ghost:hover{color:var(--text2);background:var(--bg3)}
+.main{padding:24px 32px;max-width:1400px;margin:0 auto}
+.stats{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap}
+.stat{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px 18px;min-width:140px}
+.stat-n{font-family:'IBM Plex Mono',monospace;font-size:24px;font-weight:600;color:var(--text)}
+.stat-l{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin-top:2px}
+.grid{display:flex;flex-direction:column;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.row{background:var(--bg2);display:grid;grid-template-columns:220px 1fr 320px;min-height:0;transition:background .15s}
+.row:hover{background:var(--bg3)}
+.row-head{background:var(--bg);position:sticky;top:73px;z-index:5}
+.row-head .cell{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;padding:12px 16px}
+.cell{padding:16px;border-right:1px solid var(--border);font-size:13px;line-height:1.6;color:var(--text2)}
+.cell:last-child{border-right:none}
+.person{display:flex;flex-direction:column;gap:6px}
+.person-name{font-weight:700;font-size:14px;color:var(--text)}
+.person-title{font-size:12px;color:var(--text3)}
+.person-org{font-size:11px;color:var(--text3);font-family:'IBM Plex Mono',monospace}
+.tag{display:inline-flex;padding:3px 8px;border-radius:4px;font-size:11px;font-weight:600;margin:2px}
+.tag-green{background:var(--green-bg);color:var(--green)}
+.tag-amber{background:var(--amber-bg);color:var(--amber)}
+.tag-blue{background:var(--blue-bg);color:var(--blue)}
+.tag-purple{background:var(--purple-bg);color:var(--purple)}
+.tag-red{background:var(--red-bg);color:var(--red)}
+.qa-block{margin-bottom:12px}
+.qa-q{font-size:12px;color:var(--text3);font-weight:600;margin-bottom:4px;font-family:'IBM Plex Mono',monospace}
+.qa-a{font-size:13px;color:var(--text2);line-height:1.6}
+.synthesis{padding:12px 14px;border-radius:8px;background:var(--bg);border:1px solid var(--border);font-size:13px;line-height:1.6}
+.synthesis h4{font-size:11px;color:var(--green);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;font-family:'IBM Plex Mono',monospace}
+.synthesis p{color:var(--text2);margin-bottom:8px}
+.synthesis p:last-child{margin-bottom:0}
+textarea,input[type="text"]{background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans';font-size:13px;padding:10px 12px;width:100%;resize:vertical;outline:none;transition:border-color .15s}
+textarea:focus,input:focus{border-color:var(--green)}
+textarea{min-height:80px}
+input[type="text"]{height:40px}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.modal-bg.show{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:28px;width:560px;max-width:90vw;max-height:85vh;overflow-y:auto}
+.modal h2{font-size:18px;font-weight:700;margin-bottom:4px}
+.modal p{font-size:13px;color:var(--text3);margin-bottom:20px}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
+.empty{text-align:center;padding:80px 40px;color:var(--text3)}
+.empty-icon{font-size:48px;margin-bottom:16px;opacity:.5}
+.synth-loading{display:inline-flex;align-items:center;gap:6px;color:var(--green);font-size:12px;font-family:'IBM Plex Mono',monospace}
+.synth-loading .dot{width:6px;height:6px;border-radius:3px;background:var(--green);animation:pulse .8s ease-in-out infinite}
+.synth-loading .dot:nth-child(2){animation-delay:.15s}
+.synth-loading .dot:nth-child(3){animation-delay:.3s}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+.expand-btn{background:none;border:none;color:var(--text3);cursor:pointer;font-size:12px;font-family:'DM Sans';padding:4px 0;display:flex;align-items:center;gap:4px}
+.expand-btn:hover{color:var(--text2)}
+@media(max-width:900px){
+.row{grid-template-columns:1fr}
+.cell{border-right:none;border-bottom:1px solid var(--border)}
+.main{padding:16px}
+.header{padding:16px}
+.stats{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+<div class="logo">Discovery<span>.board</span></div>
+<div style="display:flex;gap:8px">
+<button class="btn btn-s" onclick="exportData()">Export JSON</button>
+<button class="btn btn-p" onclick="openModal()">+ New interview</button>
+</div>
+</div>
+
+<div class="main">
+<div class="stats" id="stats"></div>
+<div id="board"></div>
+</div>
+
+<!-- ADD/EDIT MODAL -->
+<div class="modal-bg" id="modal">
+<div class="modal">
+<h2 id="modal-title">New interview</h2>
+<p id="modal-sub">Record a customer discovery conversation</p>
+<input type="hidden" id="edit-id" value="">
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+<div class="form-group"><label>Name</label><input type="text" id="f-name" placeholder="e.g. Yumeng"></div>
+<div class="form-group"><label>Title / Role</label><input type="text" id="f-title" placeholder="e.g. Outreach Specialist"></div>
+</div>
+<div class="form-group"><label>Organization</label><input type="text" id="f-org" placeholder="e.g. Maryland Sea Grant"></div>
+<div class="form-group"><label>About them</label><textarea id="f-about" placeholder="Who are they? What's their background and connection to the industry?" rows="2"></textarea></div>
+
+<div class="form-group"><label>Prep questions <span style="text-transform:none;letter-spacing:0;font-weight:400;color:var(--text3)">(plan what to ask before the call)</span></label><textarea id="f-prep" placeholder="What questions do you want to ask? One per line.&#10;&#10;e.g.&#10;What does a typical day look like for growers you work with?&#10;What do growers complain about most?&#10;Have you seen anyone try to use technology for this?" rows="5"></textarea></div>
+
+<div style="border-top:1px solid var(--border);margin:16px 0;padding-top:16px">
+<div style="font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px">After the call: Questions &amp; Responses</div>
+</div>
+
+<div id="qa-fields">
+<div class="form-group qa-pair">
+<label>Question 1</label>
+<input type="text" class="qa-question" placeholder="What question did you ask?">
+<textarea class="qa-answer" placeholder="What did they say?" rows="3" style="margin-top:6px"></textarea>
+</div>
+</div>
+<button class="btn btn-ghost" onclick="addQA()" style="margin-bottom:20px">+ Add another question</button>
+
+<div style="display:flex;gap:8px;justify-content:flex-end">
+<button class="btn btn-s" onclick="closeModal()">Cancel</button>
+<button class="btn btn-p" onclick="saveInterview()">Save interview</button>
+</div>
+</div>
+</div>
+
+<script>
+let interviews = [];
+let qaCount = 1;
+let storageReady = false;
+
+async function loadData() {
+  try {
+    const result = await window.storage.get('discovery-interviews');
+    if (result && result.value) {
+      interviews = JSON.parse(result.value);
+    }
+    storageReady = true;
+  } catch (e) {
+    // Key doesn't exist yet, start fresh
+    storageReady = true;
+  }
+  render();
+}
+
+// Load on start
+loadData();
+
+function openModal(id) {
+  qaCount = 1;
+  document.getElementById('modal').classList.add('show');
+  document.getElementById('edit-id').value = id || '';
+  if (id !== undefined && interviews[id]) {
+    const iv = interviews[id];
+    document.getElementById('modal-title').textContent = 'Edit interview';
+    document.getElementById('f-name').value = iv.name;
+    document.getElementById('f-title').value = iv.title;
+    document.getElementById('f-org').value = iv.org;
+    document.getElementById('f-about').value = iv.about;
+    document.getElementById('f-prep').value = iv.prep || '';
+    const container = document.getElementById('qa-fields');
+    container.innerHTML = '';
+    iv.qa.forEach((q, i) => {
+      qaCount = i + 1;
+      container.innerHTML += `<div class="form-group qa-pair"><label>Question ${i+1}</label><input type="text" class="qa-question" value="${esc(q.q)}" placeholder="What question did you ask?"><textarea class="qa-answer" rows="3" style="margin-top:6px" placeholder="What did they say?">${esc(q.a)}</textarea></div>`;
+    });
+  } else {
+    document.getElementById('modal-title').textContent = 'New interview';
+    document.getElementById('f-name').value = '';
+    document.getElementById('f-title').value = '';
+    document.getElementById('f-org').value = '';
+    document.getElementById('f-about').value = '';
+    document.getElementById('f-prep').value = '';
+    document.getElementById('qa-fields').innerHTML = `<div class="form-group qa-pair"><label>Question 1</label><input type="text" class="qa-question" placeholder="What question did you ask?"><textarea class="qa-answer" rows="3" style="margin-top:6px" placeholder="What did they say?"></textarea></div>`;
+  }
+}
+
+function closeModal() { document.getElementById('modal').classList.remove('show'); }
+
+function addQA() {
+  qaCount++;
+  document.getElementById('qa-fields').innerHTML += `<div class="form-group qa-pair"><label>Question ${qaCount}</label><input type="text" class="qa-question" placeholder="What question did you ask?"><textarea class="qa-answer" rows="3" style="margin-top:6px" placeholder="What did they say?"></textarea></div>`;
+}
+
+async function saveInterview() {
+  const qs = document.querySelectorAll('.qa-question');
+  const as = document.querySelectorAll('.qa-answer');
+  const qa = [];
+  qs.forEach((q, i) => {
+    if (q.value.trim() || as[i].value.trim()) qa.push({ q: q.value.trim(), a: as[i].value.trim() });
+  });
+  const iv = {
+    name: document.getElementById('f-name').value.trim(),
+    title: document.getElementById('f-title').value.trim(),
+    org: document.getElementById('f-org').value.trim(),
+    about: document.getElementById('f-about').value.trim(),
+    prep: document.getElementById('f-prep').value.trim(),
+    qa: qa,
+    date: new Date().toISOString().split('T')[0],
+    synthesis: null
+  };
+  const editId = document.getElementById('edit-id').value;
+  if (editId !== '' && interviews[parseInt(editId)]) {
+    iv.synthesis = interviews[parseInt(editId)].synthesis;
+    interviews[parseInt(editId)] = iv;
+  } else {
+    interviews.push(iv);
+  }
+  save();
+  closeModal();
+  render();
+}
+
+async function deleteInterview(i) {
+  if (confirm('Delete this interview?')) { interviews.splice(i, 1); await save(); render(); }
+}
+
+async function synthesize(i) {
+  const iv = interviews[i];
+  const synthEl = document.getElementById('synth-' + i);
+  synthEl.innerHTML = '<div class="synth-loading"><div class="dot"></div><div class="dot"></div><div class="dot"></div> Analyzing conversation...</div>';
+
+  const qaText = iv.qa.map((q, j) => `Q: ${q.q}\nA: ${q.a}`).join('\n\n');
+  const prepText = iv.prep ? `\nPlanned questions going in:\n${iv.prep}\n` : '';
+  const prompt = `You are analyzing a customer discovery interview for a robotics startup exploring oyster aquaculture automation.
+
+Interviewee: ${iv.name}, ${iv.title} at ${iv.org}
+Background: ${iv.about}
+${prepText}
+Interview transcript:
+${qaText}
+
+Provide a concise analysis with these sections:
+1. KEY PAIN POINTS: What specific operational problems or frustrations were mentioned? List each one clearly.
+2. OPPORTUNITIES: Where could robotics or automation realistically help based on what was said?
+3. RED FLAGS: Anything that suggests a problem might not be solvable, or that the interviewee is skeptical about technology?
+4. FOLLOW-UP: What should we ask next time, or who else should we talk to based on this conversation?
+
+Be direct and specific. No fluff. Use their actual words where possible.`;
+
+  try {
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1000,
+        messages: [{ role: "user", content: prompt }]
+      })
+    });
+    const data = await response.json();
+    const text = data.content.map(c => c.text || '').join('');
+    iv.synthesis = text;
+    save();
+    renderSynthesis(i, text);
+  } catch (e) {
+    synthEl.innerHTML = '<span style="color:var(--red);font-size:12px">Analysis failed. Try again.</span>';
+  }
+}
+
+function renderSynthesis(i, text) {
+  const el = document.getElementById('synth-' + i);
+  const sections = text.split(/\d+\.\s+/g).filter(Boolean);
+  const labels = ['KEY PAIN POINTS', 'OPPORTUNITIES', 'RED FLAGS', 'FOLLOW-UP'];
+  const colors = ['amber', 'green', 'red', 'blue'];
+  let html = '<div class="synthesis">';
+  sections.forEach((s, j) => {
+    const label = labels[j] || '';
+    const color = colors[j] || 'blue';
+    html += `<h4 style="color:var(--${color});margin-top:${j > 0 ? '12px' : '0'}">${label}</h4><p>${s.trim().replace(/\n/g, '<br>')}</p>`;
+  });
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+function render() {
+  const board = document.getElementById('board');
+  const stats = document.getElementById('stats');
+
+  const totalInterviews = interviews.length;
+  const totalQs = interviews.reduce((s, iv) => s + iv.qa.length, 0);
+  const synthesized = interviews.filter(iv => iv.synthesis).length;
+
+  stats.innerHTML = `
+    <div class="stat"><div class="stat-n">${totalInterviews}</div><div class="stat-l">Interviews</div></div>
+    <div class="stat"><div class="stat-n">${totalQs}</div><div class="stat-l">Questions asked</div></div>
+    <div class="stat"><div class="stat-n">${synthesized}</div><div class="stat-l">Analyzed</div></div>
+  `;
+
+  if (!interviews.length) {
+    board.innerHTML = `<div class="empty"><div class="empty-icon">&#x1F50D;</div><div style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:8px">No interviews yet</div><div>Click "+ New interview" to record your first conversation</div></div>`;
+    return;
+  }
+
+  let html = '<div class="grid"><div class="row row-head"><div class="cell">Person</div><div class="cell">Questions & Responses</div><div class="cell">Analysis</div></div>';
+
+  interviews.forEach((iv, i) => {
+    const qaHtml = iv.qa.map(q => `<div class="qa-block"><div class="qa-q">Q: ${esc(q.q)}</div><div class="qa-a">${esc(q.a)}</div></div>`).join('');
+    const prepHtml = iv.prep ? `<div style="margin-bottom:14px;padding:10px 12px;background:var(--blue-bg);border:1px solid rgba(96,165,250,0.15);border-radius:8px"><div style="font-size:10px;font-weight:600;color:var(--blue);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;font-family:'IBM Plex Mono',monospace">Prep questions</div><div style="font-size:12px;color:var(--text2);line-height:1.7;white-space:pre-line">${esc(iv.prep)}</div></div>` : '';
+
+    let synthHtml = '';
+    if (iv.synthesis) {
+      synthHtml = `<div id="synth-${i}"></div>`;
+    } else {
+      synthHtml = `<div id="synth-${i}"><button class="btn btn-xs btn-s" onclick="synthesize(${i})">&#x2728; Analyze this interview</button></div>`;
+    }
+
+    html += `<div class="row">
+      <div class="cell">
+        <div class="person">
+          <div class="person-name">${esc(iv.name)}</div>
+          <div class="person-title">${esc(iv.title)}</div>
+          <div class="person-org">${esc(iv.org)}</div>
+          <div style="margin-top:4px;font-size:12px;color:var(--text3)">${iv.date}</div>
+          ${iv.about ? `<div style="margin-top:8px;font-size:12px;color:var(--text3);line-height:1.5">${esc(iv.about)}</div>` : ''}
+          <div style="margin-top:8px;display:flex;gap:4px">
+            <button class="btn-ghost" onclick="openModal(${i})">Edit</button>
+            <button class="btn-ghost" style="color:var(--red)" onclick="deleteInterview(${i})">Delete</button>
+          </div>
+        </div>
+      </div>
+      <div class="cell">${prepHtml}${qaHtml || '<span style="color:var(--text3)">No questions recorded yet</span>'}</div>
+      <div class="cell">${synthHtml}</div>
+    </div>`;
+  });
+
+  html += '</div>';
+  board.innerHTML = html;
+
+  interviews.forEach((iv, i) => {
+    if (iv.synthesis) renderSynthesis(i, iv.synthesis);
+  });
+}
+
+async function save() {
+  try {
+    await window.storage.set('discovery-interviews', JSON.stringify(interviews));
+  } catch (e) {
+    console.error('Save failed:', e);
+  }
+}
+
+function exportData() {
+  const blob = new Blob([JSON.stringify(interviews, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'discovery_interviews.json'; a.click();
+}
+
+function esc(s) { return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+
+</script>
+</body>
+</html>
