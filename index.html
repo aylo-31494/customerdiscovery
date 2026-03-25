@@ -27,8 +27,9 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .btn-s{background:var(--bg3);color:var(--text2);border:1px solid var(--border)}
 .btn-s:hover{border-color:var(--border2);background:var(--bg4)}
 .btn-xs{padding:6px 12px;font-size:12px;border-radius:6px}
-.btn-ghost{background:none;border:none;color:var(--text3);padding:6px 10px;font-size:12px;border-radius:6px}
+.btn-ghost{background:none;border:none;color:var(--text3);padding:6px 10px;font-size:12px;border-radius:6px;cursor:pointer}
 .btn-ghost:hover{color:var(--text2);background:var(--bg3)}
+.btn-red{background:var(--red);color:var(--bg)}
 .main{padding:24px 32px;max-width:1400px;margin:0 auto}
 .stats{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap}
 .stat{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px 18px;min-width:140px}
@@ -45,39 +46,41 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min
 .person-name{font-weight:700;font-size:14px;color:var(--text)}
 .person-title{font-size:12px;color:var(--text3)}
 .person-org{font-size:11px;color:var(--text3);font-family:'IBM Plex Mono',monospace}
-.tag{display:inline-flex;padding:3px 8px;border-radius:4px;font-size:11px;font-weight:600;margin:2px}
-.tag-green{background:var(--green-bg);color:var(--green)}
-.tag-amber{background:var(--amber-bg);color:var(--amber)}
-.tag-blue{background:var(--blue-bg);color:var(--blue)}
-.tag-purple{background:var(--purple-bg);color:var(--purple)}
-.tag-red{background:var(--red-bg);color:var(--red)}
 .qa-block{margin-bottom:12px}
 .qa-q{font-size:12px;color:var(--text3);font-weight:600;margin-bottom:4px;font-family:'IBM Plex Mono',monospace}
 .qa-a{font-size:13px;color:var(--text2);line-height:1.6}
 .synthesis{padding:12px 14px;border-radius:8px;background:var(--bg);border:1px solid var(--border);font-size:13px;line-height:1.6}
-.synthesis h4{font-size:11px;color:var(--green);text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;font-family:'IBM Plex Mono',monospace}
+.synthesis h4{font-size:11px;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px;font-family:'IBM Plex Mono',monospace}
 .synthesis p{color:var(--text2);margin-bottom:8px}
 .synthesis p:last-child{margin-bottom:0}
 textarea,input[type="text"]{background:var(--bg3);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans';font-size:13px;padding:10px 12px;width:100%;resize:vertical;outline:none;transition:border-color .15s}
 textarea:focus,input:focus{border-color:var(--green)}
-textarea{min-height:80px}
+textarea{min-height:60px}
 input[type="text"]{height:40px}
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
 .modal-bg.show{display:flex}
-.modal{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:28px;width:560px;max-width:90vw;max-height:85vh;overflow-y:auto}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:28px;width:600px;max-width:90vw;max-height:85vh;overflow-y:auto}
 .modal h2{font-size:18px;font-weight:700;margin-bottom:4px}
-.modal p{font-size:13px;color:var(--text3);margin-bottom:20px}
+.modal>p{font-size:13px;color:var(--text3);margin-bottom:20px}
 .form-group{margin-bottom:16px}
 .form-group label{display:block;font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
 .empty{text-align:center;padding:80px 40px;color:var(--text3)}
 .empty-icon{font-size:48px;margin-bottom:16px;opacity:.5}
-.synth-loading{display:inline-flex;align-items:center;gap:6px;color:var(--green);font-size:12px;font-family:'IBM Plex Mono',monospace}
-.synth-loading .dot{width:6px;height:6px;border-radius:3px;background:var(--green);animation:pulse .8s ease-in-out infinite}
-.synth-loading .dot:nth-child(2){animation-delay:.15s}
-.synth-loading .dot:nth-child(3){animation-delay:.3s}
+.loading{display:inline-flex;align-items:center;gap:6px;color:var(--green);font-size:12px;font-family:'IBM Plex Mono',monospace}
+.loading .dot{width:6px;height:6px;border-radius:3px;background:var(--green);animation:pulse .8s ease-in-out infinite}
+.loading .dot:nth-child(2){animation-delay:.15s}
+.loading .dot:nth-child(3){animation-delay:.3s}
 @keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
-.expand-btn{background:none;border:none;color:var(--text3);cursor:pointer;font-size:12px;font-family:'DM Sans';padding:4px 0;display:flex;align-items:center;gap:4px}
-.expand-btn:hover{color:var(--text2)}
+@keyframes recording{0%,100%{opacity:1}50%{opacity:.4}}
+.rec-dot{width:10px;height:10px;border-radius:5px;background:var(--red);animation:recording 1.2s ease-in-out infinite}
+.rec-box{border:2px solid var(--red);border-radius:10px;padding:16px;display:flex;align-items:center;gap:12px;background:var(--red-bg)}
+.rec-box-idle{border:2px dashed var(--border);border-radius:10px;padding:16px;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--text3);cursor:pointer;transition:border-color .15s}
+.rec-box-idle:hover{border-color:var(--text3)}
+.rec-done{border:1px solid var(--green);border-radius:10px;padding:12px 16px;background:var(--green-bg);display:flex;align-items:center;gap:10px}
+.audio-player{width:100%;margin-top:8px}
+.audio-player audio{width:100%;height:32px}
+.section-divider{border-top:1px solid var(--border);margin:20px 0;padding-top:16px}
+.section-label{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px}
 @media(max-width:900px){
 .row{grid-template-columns:1fr}
 .cell{border-right:none;border-bottom:1px solid var(--border)}
@@ -102,7 +105,6 @@ input[type="text"]{height:40px}
 <div id="board"></div>
 </div>
 
-<!-- ADD/EDIT MODAL -->
 <div class="modal-bg" id="modal">
 <div class="modal">
 <h2 id="modal-title">New interview</h2>
@@ -114,24 +116,68 @@ input[type="text"]{height:40px}
 <div class="form-group"><label>Title / Role</label><input type="text" id="f-title" placeholder="e.g. Outreach Specialist"></div>
 </div>
 <div class="form-group"><label>Organization</label><input type="text" id="f-org" placeholder="e.g. Maryland Sea Grant"></div>
-<div class="form-group"><label>About them</label><textarea id="f-about" placeholder="Who are they? What's their background and connection to the industry?" rows="2"></textarea></div>
 
-<div class="form-group"><label>Prep questions <span style="text-transform:none;letter-spacing:0;font-weight:400;color:var(--text3)">(plan what to ask before the call)</span></label><textarea id="f-prep" placeholder="What questions do you want to ask? One per line.&#10;&#10;e.g.&#10;What does a typical day look like for growers you work with?&#10;What do growers complain about most?&#10;Have you seen anyone try to use technology for this?" rows="5"></textarea></div>
-
-<div style="border-top:1px solid var(--border);margin:16px 0;padding-top:16px">
-<div style="font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px">After the call: Questions &amp; Responses</div>
+<!-- ABOUT: text or audio -->
+<div class="form-group">
+<label>About them <span style="text-transform:none;letter-spacing:0;font-weight:400;color:var(--text3)">(type or record them introducing themselves)</span></label>
+<textarea id="f-about" placeholder="Who are they? What's their background?" rows="2"></textarea>
+<div style="margin-top:8px" id="about-rec-area">
+<div class="rec-box-idle" onclick="startAboutRec()" id="about-rec-idle">
+<span style="font-size:20px">&#x1F3A4;</span>
+<span style="font-size:12px">Click to record their intro</span>
+</div>
+<div id="about-rec-active" style="display:none" class="rec-box">
+<div class="rec-dot"></div>
+<div style="flex:1"><span style="color:var(--red);font-weight:600;font-size:13px">Recording...</span><br><span style="font-size:11px;color:var(--text3)" id="about-rec-time">0:00</span></div>
+<button class="btn btn-xs btn-red" onclick="stopAboutRec()">Stop</button>
+</div>
+<div id="about-rec-done" style="display:none" class="rec-done">
+<span style="color:var(--green);font-size:13px;font-weight:600">&#x2713; Recorded</span>
+<audio id="about-audio-player" controls style="height:32px;flex:1"></audio>
+<button class="btn-ghost" style="color:var(--red)" onclick="clearAboutRec()">&#x2715;</button>
+</div>
+</div>
 </div>
 
-<div id="qa-fields">
-<div class="form-group qa-pair">
-<label>Question 1</label>
-<input type="text" class="qa-question" placeholder="What question did you ask?">
-<textarea class="qa-answer" placeholder="What did they say?" rows="3" style="margin-top:6px"></textarea>
+<!-- PREP QUESTIONS -->
+<div class="section-divider"></div>
+<div class="section-label">Prep questions <span style="text-transform:none;letter-spacing:0;font-weight:400">(write before the call)</span></div>
+<div class="form-group">
+<textarea id="f-prep" placeholder="What questions do you want to ask? One per line.&#10;&#10;e.g.&#10;What does a typical day look like for growers you work with?&#10;What do growers complain about most?&#10;Have you seen anyone try to use technology for this?" rows="5"></textarea>
 </div>
-</div>
-<button class="btn btn-ghost" onclick="addQA()" style="margin-bottom:20px">+ Add another question</button>
 
-<div style="display:flex;gap:8px;justify-content:flex-end">
+<!-- FULL INTERVIEW RECORDING -->
+<div class="section-divider"></div>
+<div class="section-label">Interview recording <span style="text-transform:none;letter-spacing:0;font-weight:400">(record the full call, we'll transcribe and analyze after)</span></div>
+
+<div id="interview-rec-area">
+<div class="rec-box-idle" onclick="startInterviewRec()" id="int-rec-idle" style="padding:28px">
+<span style="font-size:32px">&#x1F3A4;</span>
+<span style="font-size:14px;font-weight:600;color:var(--text)">Start recording the interview</span>
+<span style="font-size:12px">Hit record when the call starts. Stop when it ends.</span>
+</div>
+<div id="int-rec-active" style="display:none" class="rec-box" style="padding:20px">
+<div class="rec-dot"></div>
+<div style="flex:1"><span style="color:var(--red);font-weight:600;font-size:14px">Recording interview...</span><br><span style="font-size:12px;color:var(--text3)" id="int-rec-time">0:00</span></div>
+<button class="btn btn-red" onclick="stopInterviewRec()">Stop recording</button>
+</div>
+<div id="int-rec-done" style="display:none" class="rec-done" style="flex-direction:column;align-items:stretch">
+<div style="display:flex;align-items:center;gap:10px">
+<span style="color:var(--green);font-size:13px;font-weight:600">&#x2713; Interview recorded</span>
+<span style="font-size:11px;color:var(--text3)" id="int-rec-duration"></span>
+<button class="btn-ghost" style="color:var(--red);margin-left:auto" onclick="clearInterviewRec()">Re-record</button>
+</div>
+<div class="audio-player"><audio id="int-audio-player" controls style="width:100%;height:32px;margin-top:8px"></audio></div>
+</div>
+</div>
+
+<!-- OPTIONAL: paste transcript -->
+<div class="form-group" style="margin-top:12px">
+<label>Or paste a transcript <span style="text-transform:none;letter-spacing:0;font-weight:400;color:var(--text3)">(from Otter, Rev, etc.)</span></label>
+<textarea id="f-transcript" placeholder="Paste a full transcript here if you have one from another tool..." rows="4"></textarea>
+</div>
+
+<div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
 <button class="btn btn-s" onclick="closeModal()">Cancel</button>
 <button class="btn btn-p" onclick="saveInterview()">Save interview</button>
 </div>
@@ -140,44 +186,117 @@ input[type="text"]{height:40px}
 
 <script>
 let interviews = [];
-let qaCount = 1;
-let storageReady = false;
+let aboutRecorder = null, intRecorder = null;
+let aboutChunks = [], intChunks = [];
+let aboutBlob = null, intBlob = null;
+let aboutTimer = null, intTimer = null;
+let aboutSecs = 0, intSecs = 0;
 
 async function loadData() {
   try {
     const result = await window.storage.get('discovery-interviews');
-    if (result && result.value) {
-      interviews = JSON.parse(result.value);
-    }
-    storageReady = true;
-  } catch (e) {
-    // Key doesn't exist yet, start fresh
-    storageReady = true;
-  }
+    if (result && result.value) interviews = JSON.parse(result.value);
+  } catch (e) {}
   render();
 }
-
-// Load on start
 loadData();
 
+// --- AUDIO RECORDING ---
+function fmtTime(s) { return Math.floor(s/60) + ':' + String(s%60).padStart(2,'0'); }
+
+async function startAboutRec() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    aboutRecorder = new MediaRecorder(stream);
+    aboutChunks = [];
+    aboutRecorder.ondataavailable = e => aboutChunks.push(e.data);
+    aboutRecorder.onstop = () => {
+      aboutBlob = new Blob(aboutChunks, { type: 'audio/webm' });
+      document.getElementById('about-audio-player').src = URL.createObjectURL(aboutBlob);
+      document.getElementById('about-rec-active').style.display = 'none';
+      document.getElementById('about-rec-done').style.display = 'flex';
+      stream.getTracks().forEach(t => t.stop());
+    };
+    aboutRecorder.start();
+    aboutSecs = 0;
+    document.getElementById('about-rec-idle').style.display = 'none';
+    document.getElementById('about-rec-active').style.display = 'flex';
+    aboutTimer = setInterval(() => {
+      aboutSecs++;
+      document.getElementById('about-rec-time').textContent = fmtTime(aboutSecs);
+    }, 1000);
+  } catch(e) { alert('Microphone access denied. Please allow microphone access.'); }
+}
+
+function stopAboutRec() {
+  if (aboutRecorder && aboutRecorder.state === 'recording') aboutRecorder.stop();
+  clearInterval(aboutTimer);
+}
+
+function clearAboutRec() {
+  aboutBlob = null;
+  document.getElementById('about-rec-done').style.display = 'none';
+  document.getElementById('about-rec-idle').style.display = 'flex';
+}
+
+async function startInterviewRec() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    intRecorder = new MediaRecorder(stream);
+    intChunks = [];
+    intRecorder.ondataavailable = e => intChunks.push(e.data);
+    intRecorder.onstop = () => {
+      intBlob = new Blob(intChunks, { type: 'audio/webm' });
+      document.getElementById('int-audio-player').src = URL.createObjectURL(intBlob);
+      document.getElementById('int-rec-active').style.display = 'none';
+      document.getElementById('int-rec-done').style.display = 'flex';
+      document.getElementById('int-rec-duration').textContent = fmtTime(intSecs);
+      stream.getTracks().forEach(t => t.stop());
+    };
+    intRecorder.start();
+    intSecs = 0;
+    document.getElementById('int-rec-idle').style.display = 'none';
+    document.getElementById('int-rec-active').style.display = 'flex';
+    intTimer = setInterval(() => {
+      intSecs++;
+      document.getElementById('int-rec-time').textContent = fmtTime(intSecs);
+    }, 1000);
+  } catch(e) { alert('Microphone access denied. Please allow microphone access.'); }
+}
+
+function stopInterviewRec() {
+  if (intRecorder && intRecorder.state === 'recording') intRecorder.stop();
+  clearInterval(intTimer);
+}
+
+function clearInterviewRec() {
+  intBlob = null;
+  document.getElementById('int-rec-done').style.display = 'none';
+  document.getElementById('int-rec-idle').style.display = 'flex';
+}
+
+// --- MODAL ---
 function openModal(id) {
-  qaCount = 1;
   document.getElementById('modal').classList.add('show');
-  document.getElementById('edit-id').value = id || '';
+  document.getElementById('edit-id').value = (id !== undefined) ? id : '';
+  aboutBlob = null; intBlob = null;
+  // Reset rec UI
+  document.getElementById('about-rec-idle').style.display = 'flex';
+  document.getElementById('about-rec-active').style.display = 'none';
+  document.getElementById('about-rec-done').style.display = 'none';
+  document.getElementById('int-rec-idle').style.display = 'flex';
+  document.getElementById('int-rec-active').style.display = 'none';
+  document.getElementById('int-rec-done').style.display = 'none';
+
   if (id !== undefined && interviews[id]) {
     const iv = interviews[id];
     document.getElementById('modal-title').textContent = 'Edit interview';
     document.getElementById('f-name').value = iv.name;
     document.getElementById('f-title').value = iv.title;
     document.getElementById('f-org').value = iv.org;
-    document.getElementById('f-about').value = iv.about;
+    document.getElementById('f-about').value = iv.about || '';
     document.getElementById('f-prep').value = iv.prep || '';
-    const container = document.getElementById('qa-fields');
-    container.innerHTML = '';
-    iv.qa.forEach((q, i) => {
-      qaCount = i + 1;
-      container.innerHTML += `<div class="form-group qa-pair"><label>Question ${i+1}</label><input type="text" class="qa-question" value="${esc(q.q)}" placeholder="What question did you ask?"><textarea class="qa-answer" rows="3" style="margin-top:6px" placeholder="What did they say?">${esc(q.a)}</textarea></div>`;
-    });
+    document.getElementById('f-transcript').value = iv.transcript || '';
   } else {
     document.getElementById('modal-title').textContent = 'New interview';
     document.getElementById('f-name').value = '';
@@ -185,70 +304,109 @@ function openModal(id) {
     document.getElementById('f-org').value = '';
     document.getElementById('f-about').value = '';
     document.getElementById('f-prep').value = '';
-    document.getElementById('qa-fields').innerHTML = `<div class="form-group qa-pair"><label>Question 1</label><input type="text" class="qa-question" placeholder="What question did you ask?"><textarea class="qa-answer" rows="3" style="margin-top:6px" placeholder="What did they say?"></textarea></div>`;
+    document.getElementById('f-transcript').value = '';
   }
 }
 
-function closeModal() { document.getElementById('modal').classList.remove('show'); }
-
-function addQA() {
-  qaCount++;
-  document.getElementById('qa-fields').innerHTML += `<div class="form-group qa-pair"><label>Question ${qaCount}</label><input type="text" class="qa-question" placeholder="What question did you ask?"><textarea class="qa-answer" rows="3" style="margin-top:6px" placeholder="What did they say?"></textarea></div>`;
+function closeModal() {
+  document.getElementById('modal').classList.remove('show');
+  if (aboutRecorder && aboutRecorder.state === 'recording') aboutRecorder.stop();
+  if (intRecorder && intRecorder.state === 'recording') intRecorder.stop();
+  clearInterval(aboutTimer); clearInterval(intTimer);
 }
 
 async function saveInterview() {
-  const qs = document.querySelectorAll('.qa-question');
-  const as = document.querySelectorAll('.qa-answer');
-  const qa = [];
-  qs.forEach((q, i) => {
-    if (q.value.trim() || as[i].value.trim()) qa.push({ q: q.value.trim(), a: as[i].value.trim() });
-  });
+  const editId = document.getElementById('edit-id').value;
+  const existing = (editId !== '' && interviews[parseInt(editId)]) ? interviews[parseInt(editId)] : {};
+
   const iv = {
     name: document.getElementById('f-name').value.trim(),
     title: document.getElementById('f-title').value.trim(),
     org: document.getElementById('f-org').value.trim(),
     about: document.getElementById('f-about').value.trim(),
     prep: document.getElementById('f-prep').value.trim(),
-    qa: qa,
-    date: new Date().toISOString().split('T')[0],
-    synthesis: null
+    transcript: document.getElementById('f-transcript').value.trim(),
+    date: existing.date || new Date().toISOString().split('T')[0],
+    synthesis: existing.synthesis || null,
+    hasAboutAudio: !!(aboutBlob || existing.hasAboutAudio),
+    hasInterviewAudio: !!(intBlob || existing.hasInterviewAudio),
+    interviewDuration: intSecs > 0 ? fmtTime(intSecs) : (existing.interviewDuration || null),
   };
-  const editId = document.getElementById('edit-id').value;
+
   if (editId !== '' && interviews[parseInt(editId)]) {
-    iv.synthesis = interviews[parseInt(editId)].synthesis;
     interviews[parseInt(editId)] = iv;
   } else {
     interviews.push(iv);
   }
-  save();
+
+  // Store audio blobs as base64 if we have new recordings
+  const idx = (editId !== '') ? parseInt(editId) : interviews.length - 1;
+  if (aboutBlob) {
+    const b64 = await blobToBase64(aboutBlob);
+    try { await window.storage.set('audio-about-' + idx, b64); } catch(e) {}
+  }
+  if (intBlob) {
+    const b64 = await blobToBase64(intBlob);
+    try { await window.storage.set('audio-interview-' + idx, b64); } catch(e) {}
+  }
+
+  await save();
   closeModal();
   render();
 }
 
-async function deleteInterview(i) {
-  if (confirm('Delete this interview?')) { interviews.splice(i, 1); await save(); render(); }
+function blobToBase64(blob) {
+  return new Promise((res) => {
+    const reader = new FileReader();
+    reader.onloadend = () => res(reader.result);
+    reader.readAsDataURL(blob);
+  });
 }
 
+async function deleteInterview(i) {
+  if (confirm('Delete this interview?')) {
+    interviews.splice(i, 1);
+    try { await window.storage.delete('audio-about-' + i); } catch(e) {}
+    try { await window.storage.delete('audio-interview-' + i); } catch(e) {}
+    await save();
+    render();
+  }
+}
+
+async function playAudio(type, idx) {
+  try {
+    const result = await window.storage.get('audio-' + type + '-' + idx);
+    if (result && result.value) {
+      const audio = new Audio(result.value);
+      audio.play();
+    }
+  } catch(e) { alert('Audio not found'); }
+}
+
+// --- ANALYSIS ---
 async function synthesize(i) {
   const iv = interviews[i];
   const synthEl = document.getElementById('synth-' + i);
-  synthEl.innerHTML = '<div class="synth-loading"><div class="dot"></div><div class="dot"></div><div class="dot"></div> Analyzing conversation...</div>';
+  synthEl.innerHTML = '<div class="loading"><div class="dot"></div><div class="dot"></div><div class="dot"></div> Analyzing conversation...</div>';
 
-  const qaText = iv.qa.map((q, j) => `Q: ${q.q}\nA: ${q.a}`).join('\n\n');
-  const prepText = iv.prep ? `\nPlanned questions going in:\n${iv.prep}\n` : '';
+  const prepText = iv.prep ? 'Planned questions:\n' + iv.prep + '\n\n' : '';
+  const transcriptText = iv.transcript ? 'Full transcript:\n' + iv.transcript : '(No transcript provided)';
+  const aboutText = iv.about ? 'About the interviewee (in their words or noted): ' + iv.about : '';
+
   const prompt = `You are analyzing a customer discovery interview for a robotics startup exploring oyster aquaculture automation.
 
 Interviewee: ${iv.name}, ${iv.title} at ${iv.org}
-Background: ${iv.about}
-${prepText}
-Interview transcript:
-${qaText}
+${aboutText}
 
-Provide a concise analysis with these sections:
+${prepText}${transcriptText}
+
+Based on the transcript and prep questions, provide:
+
 1. KEY PAIN POINTS: What specific operational problems or frustrations were mentioned? List each one clearly.
-2. OPPORTUNITIES: Where could robotics or automation realistically help based on what was said?
-3. RED FLAGS: Anything that suggests a problem might not be solvable, or that the interviewee is skeptical about technology?
-4. FOLLOW-UP: What should we ask next time, or who else should we talk to based on this conversation?
+2. QUESTION MAPPING: Match the prep questions to answers from the transcript. For each prep question, show what the interviewee said (quote or paraphrase). Note any prep questions that weren't addressed.
+3. OPPORTUNITIES: Where could robotics or automation realistically help based on what was said?
+4. RED FLAGS: Anything suggesting a problem is not solvable, or skepticism about technology.
+5. FOLLOW-UP: What should we ask next, and who else should we talk to?
 
 Be direct and specific. No fluff. Use their actual words where possible.`;
 
@@ -258,14 +416,14 @@ Be direct and specific. No fluff. Use their actual words where possible.`;
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         model: "claude-sonnet-4-20250514",
-        max_tokens: 1000,
+        max_tokens: 1500,
         messages: [{ role: "user", content: prompt }]
       })
     });
     const data = await response.json();
     const text = data.content.map(c => c.text || '').join('');
     iv.synthesis = text;
-    save();
+    await save();
     renderSynthesis(i, text);
   } catch (e) {
     synthEl.innerHTML = '<span style="color:var(--red);font-size:12px">Analysis failed. Try again.</span>';
@@ -275,83 +433,91 @@ Be direct and specific. No fluff. Use their actual words where possible.`;
 function renderSynthesis(i, text) {
   const el = document.getElementById('synth-' + i);
   const sections = text.split(/\d+\.\s+/g).filter(Boolean);
-  const labels = ['KEY PAIN POINTS', 'OPPORTUNITIES', 'RED FLAGS', 'FOLLOW-UP'];
-  const colors = ['amber', 'green', 'red', 'blue'];
+  const labels = ['KEY PAIN POINTS', 'QUESTION MAPPING', 'OPPORTUNITIES', 'RED FLAGS', 'FOLLOW-UP'];
+  const colors = ['amber', 'purple', 'green', 'red', 'blue'];
   let html = '<div class="synthesis">';
   sections.forEach((s, j) => {
     const label = labels[j] || '';
     const color = colors[j] || 'blue';
-    html += `<h4 style="color:var(--${color});margin-top:${j > 0 ? '12px' : '0'}">${label}</h4><p>${s.trim().replace(/\n/g, '<br>')}</p>`;
+    html += '<h4 style="color:var(--' + color + ');margin-top:' + (j > 0 ? '12px' : '0') + '">' + label + '</h4><p>' + s.trim().replace(/\n/g, '<br>') + '</p>';
   });
   html += '</div>';
   el.innerHTML = html;
 }
 
+// --- RENDER ---
 function render() {
   const board = document.getElementById('board');
   const stats = document.getElementById('stats');
-
-  const totalInterviews = interviews.length;
-  const totalQs = interviews.reduce((s, iv) => s + iv.qa.length, 0);
+  const total = interviews.length;
   const synthesized = interviews.filter(iv => iv.synthesis).length;
+  const recorded = interviews.filter(iv => iv.hasInterviewAudio || iv.transcript).length;
 
-  stats.innerHTML = `
-    <div class="stat"><div class="stat-n">${totalInterviews}</div><div class="stat-l">Interviews</div></div>
-    <div class="stat"><div class="stat-n">${totalQs}</div><div class="stat-l">Questions asked</div></div>
-    <div class="stat"><div class="stat-n">${synthesized}</div><div class="stat-l">Analyzed</div></div>
-  `;
+  stats.innerHTML = '<div class="stat"><div class="stat-n">' + total + '</div><div class="stat-l">Interviews</div></div>' +
+    '<div class="stat"><div class="stat-n">' + recorded + '</div><div class="stat-l">Recorded / Transcribed</div></div>' +
+    '<div class="stat"><div class="stat-n">' + synthesized + '</div><div class="stat-l">Analyzed</div></div>';
 
-  if (!interviews.length) {
-    board.innerHTML = `<div class="empty"><div class="empty-icon">&#x1F50D;</div><div style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:8px">No interviews yet</div><div>Click "+ New interview" to record your first conversation</div></div>`;
+  if (!total) {
+    board.innerHTML = '<div class="empty"><div class="empty-icon">&#x1F50D;</div><div style="font-size:16px;font-weight:600;color:var(--text);margin-bottom:8px">No interviews yet</div><div>Click "+ New interview" to record your first conversation</div></div>';
     return;
   }
 
-  let html = '<div class="grid"><div class="row row-head"><div class="cell">Person</div><div class="cell">Questions & Responses</div><div class="cell">Analysis</div></div>';
+  let html = '<div class="grid"><div class="row row-head"><div class="cell">Person</div><div class="cell">Interview</div><div class="cell">Analysis</div></div>';
 
-  interviews.forEach((iv, i) => {
-    const qaHtml = iv.qa.map(q => `<div class="qa-block"><div class="qa-q">Q: ${esc(q.q)}</div><div class="qa-a">${esc(q.a)}</div></div>`).join('');
-    const prepHtml = iv.prep ? `<div style="margin-bottom:14px;padding:10px 12px;background:var(--blue-bg);border:1px solid rgba(96,165,250,0.15);border-radius:8px"><div style="font-size:10px;font-weight:600;color:var(--blue);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;font-family:'IBM Plex Mono',monospace">Prep questions</div><div style="font-size:12px;color:var(--text2);line-height:1.7;white-space:pre-line">${esc(iv.prep)}</div></div>` : '';
+  interviews.forEach(function(iv, i) {
+    // Person cell
+    let personHtml = '<div class="person">' +
+      '<div class="person-name">' + esc(iv.name) + '</div>' +
+      '<div class="person-title">' + esc(iv.title) + '</div>' +
+      '<div class="person-org">' + esc(iv.org) + '</div>' +
+      '<div style="margin-top:4px;font-size:12px;color:var(--text3)">' + iv.date + '</div>';
+    if (iv.about) personHtml += '<div style="margin-top:8px;font-size:12px;color:var(--text2);line-height:1.5">' + esc(iv.about) + '</div>';
+    if (iv.hasAboutAudio) personHtml += '<button class="btn-ghost" style="margin-top:4px" onclick="playAudio(\'about\',' + i + ')">&#x1F50A; Play intro</button>';
+    personHtml += '<div style="margin-top:8px;display:flex;gap:4px">' +
+      '<button class="btn-ghost" onclick="openModal(' + i + ')">Edit</button>' +
+      '<button class="btn-ghost" style="color:var(--red)" onclick="deleteInterview(' + i + ')">Delete</button></div></div>';
 
-    let synthHtml = '';
-    if (iv.synthesis) {
-      synthHtml = `<div id="synth-${i}"></div>`;
-    } else {
-      synthHtml = `<div id="synth-${i}"><button class="btn btn-xs btn-s" onclick="synthesize(${i})">&#x2728; Analyze this interview</button></div>`;
+    // Interview cell
+    let intHtml = '';
+    if (iv.prep) {
+      intHtml += '<div style="margin-bottom:14px;padding:10px 12px;background:var(--blue-bg);border:1px solid rgba(96,165,250,0.15);border-radius:8px">' +
+        '<div style="font-size:10px;font-weight:600;color:var(--blue);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;font-family:IBM Plex Mono,monospace">Prep questions</div>' +
+        '<div style="font-size:12px;color:var(--text2);line-height:1.7;white-space:pre-line">' + esc(iv.prep) + '</div></div>';
+    }
+    if (iv.hasInterviewAudio) {
+      intHtml += '<div style="margin-bottom:10px;display:flex;align-items:center;gap:8px">' +
+        '<span style="color:var(--green);font-size:12px;font-weight:600">&#x2713; Audio recorded</span>';
+      if (iv.interviewDuration) intHtml += '<span style="font-size:11px;color:var(--text3)">' + iv.interviewDuration + '</span>';
+      intHtml += '<button class="btn-ghost" onclick="playAudio(\'interview\',' + i + ')">&#x1F50A; Play</button></div>';
+    }
+    if (iv.transcript) {
+      intHtml += '<div style="padding:10px 12px;background:var(--bg3);border-radius:8px;font-size:12px;color:var(--text2);line-height:1.7;max-height:200px;overflow-y:auto;white-space:pre-line">' + esc(iv.transcript) + '</div>';
+    }
+    if (!iv.prep && !iv.hasInterviewAudio && !iv.transcript) {
+      intHtml = '<span style="color:var(--text3)">No recording or transcript yet. Click Edit to add.</span>';
     }
 
-    html += `<div class="row">
-      <div class="cell">
-        <div class="person">
-          <div class="person-name">${esc(iv.name)}</div>
-          <div class="person-title">${esc(iv.title)}</div>
-          <div class="person-org">${esc(iv.org)}</div>
-          <div style="margin-top:4px;font-size:12px;color:var(--text3)">${iv.date}</div>
-          ${iv.about ? `<div style="margin-top:8px;font-size:12px;color:var(--text3);line-height:1.5">${esc(iv.about)}</div>` : ''}
-          <div style="margin-top:8px;display:flex;gap:4px">
-            <button class="btn-ghost" onclick="openModal(${i})">Edit</button>
-            <button class="btn-ghost" style="color:var(--red)" onclick="deleteInterview(${i})">Delete</button>
-          </div>
-        </div>
-      </div>
-      <div class="cell">${prepHtml}${qaHtml || '<span style="color:var(--text3)">No questions recorded yet</span>'}</div>
-      <div class="cell">${synthHtml}</div>
-    </div>`;
+    // Synthesis cell
+    let synthHtml = '';
+    if (iv.synthesis) {
+      synthHtml = '<div id="synth-' + i + '"></div>';
+    } else if (iv.transcript) {
+      synthHtml = '<div id="synth-' + i + '"><button class="btn btn-xs btn-s" onclick="synthesize(' + i + ')">&#x2728; Analyze interview</button></div>';
+    } else {
+      synthHtml = '<div id="synth-' + i + '"><span style="font-size:12px;color:var(--text3)">Add a transcript to enable analysis</span></div>';
+    }
+
+    html += '<div class="row"><div class="cell">' + personHtml + '</div><div class="cell">' + intHtml + '</div><div class="cell">' + synthHtml + '</div></div>';
   });
 
   html += '</div>';
   board.innerHTML = html;
-
-  interviews.forEach((iv, i) => {
-    if (iv.synthesis) renderSynthesis(i, iv.synthesis);
-  });
+  interviews.forEach(function(iv, i) { if (iv.synthesis) renderSynthesis(i, iv.synthesis); });
 }
 
 async function save() {
-  try {
-    await window.storage.set('discovery-interviews', JSON.stringify(interviews));
-  } catch (e) {
-    console.error('Save failed:', e);
-  }
+  try { await window.storage.set('discovery-interviews', JSON.stringify(interviews)); }
+  catch (e) { console.error('Save failed:', e); }
 }
 
 function exportData() {
@@ -362,7 +528,6 @@ function exportData() {
 }
 
 function esc(s) { return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
-
 </script>
 </body>
 </html>
